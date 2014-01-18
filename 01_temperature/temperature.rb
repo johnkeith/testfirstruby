@@ -1,8 +1,7 @@
 def ftoc(fah)
-  converted = (fah - 32)/(1.8)
-  return converted.round
+  (fah - 32) * 5/9
 end
 
 def ctof(cel)
-  converted = (1.8 * cel) + 32
+  (cel.to_f * 9/5) + 32
 end
