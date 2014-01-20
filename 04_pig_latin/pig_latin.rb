@@ -1,6 +1,36 @@
-# can you pass a variable into a regex? if so, it might work well to create an array of funky phonemes
-# and then iterate through that array for each word. 
+def translate(string)
+  vows = %w[a e i o u A E I O U]
+  to_be_pigged = string.split
 
+  to_be_pigged.map! do |word|
+
+    add_to_end = []
+    punc = ""
+    caps = false
+
+    punc = word.slice!(/[\?\.\!]/) if word.match(/[\?\.\!]/)
+
+    word.match(/[A-Z]/) ? caps = true : caps = false
+
+    while ! vows.include? word[0]
+      word[0] == "q" ? add_to_end << word.slice!(0,2) : add_to_end << word.slice!(0,1)
+    end
+
+    if caps == true
+      word = (word + add_to_end.join + "ay" + punc).downcase.capitalize
+    else
+      word = word + add_to_end.join + "ay" + punc
+    end
+
+    word
+
+  end
+  to_be_pigged.join(" ")
+end
+
+# lots of other iterations below. came back to this one at the end
+
+=begin
 def translate(string)
   vows = ["a","e","i","o","u"]
   cons = ("a".."z").to_a - vows
@@ -31,4 +61,54 @@ def translate(string)
   end
   to_be_pigged.join(" ")
 end
+=end
+=begin
+def translate(string)
+  vows = %w[a e i o u A E I O U]
+  cons_up = ("A".."Z").to_a - vows
+  cons_low = ("a".."z").to_a - vows
+
+  to_be_pigged = string.split
+  p to_be_pigged
+  
+  to_be_pigged.map! do |word|
+    
+    word_a = word.split(//)
+    p word_a
+    
+    add_to_end = []
+
+    word_a.each do |letter|
+      if letter.match(/(?i)\A[aeiou]/)
+        word = word_a.join + add_to_end.join + "ay"
+      elsif letter.match(/(?i)\A[q]/)
+        add_to_end << word_a.slice!(0,2)
+      else
+        add_to_end << word_a.slice!(0,1)
+      end
+    end
+
+  end
+
+  p to_be_pigged.join(" ")
+end
+=end
+=begin
+def translate(string)
+  vows = %w[a e i o u A E I O U]
+  to_be_pigged = string.split
+
+  to_be_pigged.map! do |word|
+    add_to_end = []
+    
+    while ! vows.include? word[0]
+      word[0] == "q" ? add_to_end << word.slice!(0,2) : add_to_end << word.slice!(0,1)
+    end
+
+    word = word + add_to_end.join + "ay"
+  end
+  to_be_pigged.join(" ")
+end
+=end
+   
 

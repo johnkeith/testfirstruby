@@ -5,12 +5,18 @@ class Timer
   	@seconds = 0
   end
 
+  def padded(n)
+    n.to_s.rjust(2,'0')
+  end
+
   def time_string
-  	hrs = (@seconds/3600).to_s.rjust(2,'0')
-  	mins = ((@seconds%3600)/60).to_s.rjust(2,'0')
-  	secs = (@seconds%60).to_s.rjust(2,'0')
+  	hrs = padded(@seconds/3600)
+  	mins = padded(@seconds%3600/60)
+  	secs = padded(@seconds%60)
   	time = "#{hrs}:#{mins}:#{secs}"
   end
+
+  
 end
 
 
